@@ -110,6 +110,14 @@ They can be added to the end of an array:
 
 at this stage it would be: `['Simon',333]`
 
+### Paralell assignment
+
+You can assign multiple variables values from an array in a single statement. The position of the variable determines which elements value it is assigned.
+
+```ruby
+one,two,three = [0,1,2] #one = 0, two = 1, three = 3
+```
+
 ### Accessing values
 
 Values can be accessed by directly inputing their element index, or using methods such as `.first` and `.last`
@@ -127,3 +135,50 @@ When passing in 2 indexes to access an array, it returns a subset as follows:
 `myArray[<starting_element>, <count>]`, it will add `<count>` elements starting from `<starting_element>` unless the array is smaller then it will go to the last element.
 
 NOTE: if the `<starting_element>` is greater than the length of the array, it will return `nil`
+
+### .push and .pop methods
+
+Using .push on array puts the value at the end of the array. Using .pop returns and deletes the last value of the array.
+
+### .shift and .unshift methods
+
+The .shift method returns and deletes the first value of an array. The .unshift method adds to the begining of an array.
+
+### Splats values - double and single splat (*) values
+
+The single splat: example*, and the double splat: example**
+
+Splats are used to accept parameters when you don't yet know the number of parameters that are coming in, or you want to act dynamically based on the number of parameters that come in.
+
+
+
+### Ranges
+
+An array: [5,6,7,8], a range: (5..8) or (5...8) if you want to exclude the last value, in this case `8`. To convert a range to an array, you use the .to_a method, i.e.:
+
+```ruby
+myRange = (5..15)
+myArray = myRange.to_a
+```
+
+### Array ranges
+
+You can reference ranges of values using the range notation in square brachets.
+
+```ruby
+myArray = [0,1,2,3,4,5,6,7,8,9]
+myArrayRange1 = myArray[0..3]   #[0,1,2,3]
+myArrayRange2 = myArray[0...3]  #[0,1,2]
+
+myArrayRange1 = myArray[2..5]   #[2,3,4,5]
+```
+
+## Booleans
+
+### Question marks
+
+If a method ends in a question mark this means that a boolean is expected. i.e.:
+
+` myObject.is_true? 
+
+Will fail if a non-boolean value is returned.
