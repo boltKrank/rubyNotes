@@ -157,6 +157,8 @@ The .shift method returns and deletes the first value of an array. The .unshift 
 
 ### Splats values - double and single splat (*) values
 
+Splat values replace single parameters with arrays to allow more than one value to be passed in.
+
 The single splat: example*, and the double splat: example**
 
 Splats are used to accept parameters when you don't yet know the number of parameters that are coming in, or you want to act dynamically based on the number of parameters that come in.
@@ -313,5 +315,171 @@ Flexible quotes : and non-alphanumeric character after the % symbol makes a flex
     EOS
 ```
 
-###
+### String methods
+
+.split : splits the String into an Array of words, seperated by a token (space by default)
+.split(/:/) : the above using ":" as a token
+.join : joins an Array of words into a single string, seperating each with a token (space by default)
+
+### Shovel operator (<<) in Strings
+
+The shovel operator (<<)
+
+## Symbols (:symbol)
+
+A Symbol is an object type. It represents a location in memory, and this memory location is never changed. :my_symbol will always point to the same point.
+
+Further info [see here](http://www.randomhacks.net.s3-website-us-east-1.amazonaws.com/2007/01/20/13-ways-of-looking-at-a-ruby-symbol/)
+
+### Existing symbols
+
+You can list all symbols in use with the statement:
+
+```ruby
+list_of_all_symbols_as_string = Symbol.all_symbols.map { |x| x.to_s }
+puts list_of_all_symbols_as_string
+```
+
+### Converting strings to symbols
+
+```ruby
+    myString = "simon"
+    myString.to_sym   #returns :simon
+
+    mySymbol = :randomSymbol
+    mySymbol.to_s       #returns "randomSymbol"  no :
+```
+
+## Objects and variables
+
+## Methods
+
+### Method structure
+
+```ruby
+    def myMethod(parameter1, parameter2, *otherParameters)
+        #Do something
+    end
+```
+
+Methods start with 'def' encompassing everything until it hits the 'end'.
+
+### Calling methods
+
+The above method can be called by
+`myMethod(1,2,3)`
+`myMethod 1,2,3`
+
+### Arguments
+
+The wrong number of arguments will cause a runtime error, it's not a syntax error. This is good to know when looking for the exception thrown. Usually it'll be ArgumentError
+
+### Method return values
+
+**TODO**  Check if this is right:
+The last value returned is the method's return value.
+
+Using the command 'return' explicity decides which value to return
+
+```ruby
+
+    def myMethod(a,b)
+        :sym1
+        return :sym2  #This is the return value
+        :sym3
+    end
+```
+
+When that return command isn't used, the last value is the return value.
+The actual rule is "The last evaluated expression is returned"
+
+```ruby
+
+    def myMethod(a,b)
+        :sym1
+        :sym2  
+        :sym3   #This is the return value
+    end
+```
+
+### Check available methods
+
+`myVariable.respond_to?(:method_name)`
+
+This will return false, if the object of which myVariable is a type of doesn't have a method by the name 'method_name'
+
+### Private methods
+
+**TODO** Check below to see why it fails (I think it's because we've overridden the method with the symbol ??)
+It looks like everything that comes after the 'private' keyword becomes private (not accessible from outside the object), and since the symbols point to the methods of the same name the method then become private.
+
+```ruby
+  def my_private_method
+    "a secret"
+  end
+  private :my_private_method
+
+  def test_calling_private_methods_with_an_explicit_receiver
+    exception = assert_raise(NoMethodError) do
+      self.my_private_method
+    end
+    assert_match /private method/, exception.message
+  end
+```
+
+### Method arguments
+
+```ruby
+    def myMethod(arg1: 1, arg2: 2)
+        [arg1, arg2]
+    end
+```
+
+In the above, we can just call myMethod, and it'll return [1,2], but in the following
+
+```ruby
+    def myMethod(arg1, arg2: 2)
+        [arg1, arg2]
+    end
+```
+
+We'll get an error from calling myMethod, as there is no default for arg1 and it's expecting a value. ArgumentError will be thrown.
+
+## Regular expressions
+
+Regular expressions are Objects like everything else seems to be. The object type is Regexp. So default class types are like the following:
+
+- 1 is Integer
+- "Simon" is String
+- \Hello\ is Regexp
+
+**TODO:** Review the Regexp examples.
+
+## Constants
+
+In Ruby, any variable that starts with a capital letter is considered a constant.
+
+**TODO** Look at scope when inheritence is used.
+
+```ruby
+
+    class MyClass 
+
+    end
+
+    class MyOtherClass < MyClass # This class inherits from MyClass. Need to check what's inherited, and what's overridden.
+
+    end
+```
+
+
+## Control statements
+
+**TODO** practice 'unless' statements. 
+
+`unless a`
+
+is the same as
+
+`if a == false`
 
