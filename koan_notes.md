@@ -80,6 +80,17 @@ Like *final* in Java, this makes the object static, RuntimeError exception will 
 
 Makes a clone of the object. This clone is of the same state, but has a different object_id
 
+### .class
+
+Returns the type of class the object is.
+
+```ruby
+    object1 = Hash.new
+    object2 = Array.new
+    object1.class # returns Hash.  Empty Hash's are {}
+    object2.class # returns Array. Empty Array's are []
+```
+
 ## Exceptions
 
 ```ruby
@@ -150,7 +161,25 @@ The single splat: example*, and the double splat: example**
 
 Splats are used to accept parameters when you don't yet know the number of parameters that are coming in, or you want to act dynamically based on the number of parameters that come in.
 
+*Example:*
 
+```ruby
+    element1, *element2 = [1,2,3,4,5,6,7] #element1 == 1, element2 == [2,3,4,5,6,7]
+```
+
+**NOTE:**
+
+If we weren't using a splat value, then element2 would only equal the next element
+
+*Example:*
+
+```ruby
+    element1, element2 = [1,2,3,4,5,6,7] #element1 == 1, element2 == 2
+```
+
+In the above example `element1` equals the first element, whilst `element2` is all remaining elements.
+
+TODO: Check what happens with multiple splats ? Does it need to be the last parameter ?
 
 ### Ranges
 
@@ -173,12 +202,116 @@ myArrayRange2 = myArray[0...3]  #[0,1,2]
 myArrayRange1 = myArray[2..5]   #[2,3,4,5]
 ```
 
+## Hashes
+
+A Hash is like an array, but uses {} instead of []. It is made up of key-value pairs, returning a Nil object if the key doesn't exist.
+
+### initialisation
+
+Initialising a Hash is the same as initialising any object.
+
+`myHash = Hash.new`
+
+You can add a default, which is the value returned when no matching key is found.
+
+`myHash = Hash.new("default_value")`
+
+### adding to default value
+
+When I add to an object using a key that doesn't exist, it's just going to add to that `default_value`
+
+*Example:*
+
+```ruby
+    myHash = Hash.new([])
+    myHash[:one] << 2 #Because the key :one doesn't exist, 2 will be added to the default array making it [2].
+    myHash[:two] << 3 #Because the key :two doesn't exist, 2 will be added to the default array making it [2,3].
+```
+
+If you want the above to create the key and value, we can initialise the Hash like this:
+
+`myHash = Hash.new {|hash, key| hash[key] = [] }`
+
+*Example:*
+
+```ruby
+    myHash = Hash.new([])
+    myHash[:one] << 2 #This will make myHash become: {:one => [2]}
+    myHash[:two] << 3 #This will make myHash become: {:one => [2], :two => [3]}
+```
+
+In the above the values are added to arrays, as that's the datatype specified during the initialisation. This can be changed to any object type if needed.
+
+*Example:*
+
+`myHash = Hash.new {|hash, key| hash[key] = "" }  #String type`
+`myHash = Hash.new {|hash, key| hash[key] = "".to_i } #String converted to integer`
+`myHash = Hash.new {|hash, key| hash[key] = "".to_f } #String converted to float`
+
+### fetch
+
+*Usage:*
+
+```ruby
+hashObject.fetch(key_name)
+hashObject.fetch(key_name, default_value)
+hashObject.fetch(key_name) { |key| "default"} #if key_name doesn't exist run the supplied block and return the value (i.e. a default Hash object is returned then fetch'd)
+```
+
+### order
+
+Hashes are cosidered unordered lists.
+
+`{:two => 'two', :one => 'one'} == {:one => 'one', :two => 'two'}`
+
+### methods
+
+.keys : returns an Array of all the keys in they Hash
+.keys.include?(key_name) : shows if a key exists in a Hash. **NOTE:** .include? is an Array method.
+
+.values : returns an Array of all the values in they Hash
+.values.include?(key_name) : shows if a value exists in a Hash. **NOTE:** .include? is an Array method.
+
+.merge(hash_object) : returns current Hash with the Hash passed in, but does not alter current Hash.
+
 ## Booleans
 
 ### Question marks
 
 If a method ends in a question mark this means that a boolean is expected. i.e.:
 
-` myObject.is_true? 
+`myObject.is_true?`
 
 Will fail if a non-boolean value is returned.
+
+## Strings
+
+### Quotes
+
+Double quotes ("") are used for Strings that need things parsed within.
+Single quotes ('') are literals
+Escaping : Backslashes are used to escape special characters.
+Flexible quotes : and non-alphanumeric character after the % symbol makes a flexible quote.
+
+*Example:*
+
+```ruby
+    %[this is a valid string]
+    %~this is a valid string~
+    %+this is a valid string+
+
+    %+ They can
+        also handle
+        multiple
+        lines +
+
+    #Another way of doing multiple lines is via EOS (End of String):
+
+    long_string = <<EOS
+    This is the first line,
+    this is the second line.
+    EOS
+```
+
+###
+
