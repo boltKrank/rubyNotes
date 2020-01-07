@@ -278,6 +278,10 @@ Hashes are cosidered unordered lists.
 
 ## Booleans
 
+### True or false ?
+
+In Ruby, false is false, and nil is also false. Everything is is true. Such as 0, 1, [], {}, "", etc.
+
 ### Question marks
 
 If a method ends in a question mark this means that a boolean is expected. i.e.:
@@ -483,3 +487,8 @@ is the same as
 
 `if a == false`
 
+## Exceptions
+
+Exceptions (error handlings).
+
+.ancestors : returns an Array that goes up the hierachy of Exceptions.
