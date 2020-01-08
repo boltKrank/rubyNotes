@@ -91,16 +91,6 @@ Returns the type of class the object is.
     object2.class # returns Array. Empty Array's are []
 ```
 
-## Exceptions
-
-```ruby
-begin #Equivalent to try blocks in Java
-
-rescue Exception => ex  #Like Java this will catch all exceptions
-    ex.message #prints out the exception message
-end
-```
-
 ## Arrays
 
 Like everything else in Ruby, they're objects with in-built functionality to handle a series of other objects.
@@ -278,7 +268,7 @@ Hashes are cosidered unordered lists.
 
 ## Booleans
 
-### True or false ?
+### True or false
 
 In Ruby, false is false, and nil is also false. Everything is is true. Such as 0, 1, [], {}, "", etc.
 
@@ -467,7 +457,7 @@ In Ruby, any variable that starts with a capital letter is considered a constant
 
 ```ruby
 
-    class MyClass 
+    class MyClass
 
     end
 
@@ -476,10 +466,9 @@ In Ruby, any variable that starts with a capital letter is considered a constant
     end
 ```
 
-
 ## Control statements
 
-**TODO** practice 'unless' statements. 
+**TODO** practice 'unless' statements.
 
 `unless a`
 
@@ -491,4 +480,98 @@ is the same as
 
 Exceptions (error handlings).
 
+```ruby
+begin #Equivalent to try blocks in Java
+
+rescue Exception => ex  #Like Java this will catch all exceptions
+    ex.message #prints out the exception message
+end
+```
+
+### Exception commands and methods
+
 .ancestors : returns an Array that goes up the hierachy of Exceptions.
+
+`raise`     - this raises an Excpetion object. Sytax is `raise "error message"` or `raise ExceptionObject, "error message"`
+`fail`      - acts like a raise but throws error message, best thrown when things aren't running as they should.
+`rescue`    - like "catch" in Java, it'll listen out for Exceptions of a certain type.
+`ensure`    - a block of code that always runs during the Exception process.
+
+Exceptions can be created on the fly. i.e.:
+
+`raise MySpecialException.new("Special error message")`
+
+## Iterating
+
+Arrays have a method called `.each` it will go through each element of the array and perform an action as described after the `do`
+
+*Example:*
+
+```ruby
+    array = [1,2,3,4,5]
+    sum = 0
+    array.each { |item| sum += item}
+    puts sum
+```
+
+In the above example " |item| " is a temporary variable name we use for the values that come out.
+If we were to do more names like " |item1,item2| " will do 2 elements at a time.
+
+`.break` - You cat put a break condition in the iterations to stop it going to the end, if there isn't a need to.
+
+```ruby
+    array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    sum = 0
+    array.each do |item|
+      break if item > 3
+      sum += item
+    end
+```
+
+`.collect` - Used to make a transformation to each element in the collection
+`.map` - does the same as `.collect`
+
+```ruby
+    array = [1, 2, 3]   # [1,2,3]
+    new_array = array.collect { |item| item + 10 } # [11,12,13]
+```
+
+`.select` - deletes elements that don't match the boolean codition following.
+`.find_all` - does the same as above.
+
+`.find` - returns the first element that matches the condition
+
+`.inject`  - Combins enum and binary operation.
+*More info:* [See here](https://ruby-doc.org/core-2.3.1/Enumerable.html#method-i-inject)
+
+## Blocks
+
+`yield` processes the code block that was passed in.
+*Example:*
+```ruby
+    def method_using_block
+        yield
+    end
+
+    method_using_block { puts "Hello" }
+
+    method_using_block do puts "Hello" end  # do and end can be used instead of { }
+```
+The above code will print out the string "Hello".
+
+You can test whether a block has been passed in or not with the boolean check `block_given?` this returns false if a block hasn't been passed in.
+
+```ruby
+
+    def block_test
+        if block_given?
+            yield
+        else
+            :no_block
+        end
+    end
+
+    block_test # This returns :no_block
+    block_test { 1 + 1} # This returns 2
+```
+
